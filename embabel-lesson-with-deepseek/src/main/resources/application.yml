@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  ai:
+    ollama:
+      base-url: http://127.0.0.1:6399/
+
+embabel:
+  models:
+    default-llm: deepseek-chat
+
+# deep seek 自动装配
+DEEPSEEK_BASE_URL: https://api.deepseek.com/
+DEEPSEEK_API_KEY: sk-1234567890123456789

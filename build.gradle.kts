@@ -1,0 +1,43 @@
+plugins {
+    kotlin("jvm") apply false
+    kotlin("plugin.spring")
+    id("io.spring.dependency-management")
+}
+
+subprojects {
+    group = "com.xsr.technique"
+    version = "0.1.0"
+
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+        maven {
+            name = "embabel-snapshots"
+            url = uri("https://repo.embabel.com/artifactory/libs-snapshot")
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+        maven {
+            name = "Spring Milestones"
+            url = uri("https://repo.spring.io/milestone")
+        }
+    }
+
+    apply {
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("io.spring.dependency-management")
+    }
+
+    dependencyManagement {
+        dependencies {
+            dependency("org.jetbrains.kotlin:kotlin-reflect:${extra["kotlin.version"] as String}")
+
+            dependency("org.springdoc:springdoc-openapi-starter-webflux-ui:2.3.0")
+            dependency("com.embabel.agent:embabel-agent-starter:${extra["embabel-agent.version"] as String}")
+        }
+    }
+
+}

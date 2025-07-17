@@ -1,0 +1,9 @@
+spring:
+  ai:
+    ollama:
+      base-url: http://127.0.0.1:6399/
+
+
+# openai 自动装配
+OPENAI_BASE_URL:
+OPENAI_API_KEY:

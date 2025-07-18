@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import java.time.LocalDate
 
 @ConfigurationProperties(prefix = "embabel.deekseek")
@@ -22,7 +21,6 @@ data class DeepSeekProperties(
 ) : RetryProperties
 
 @Configuration
-@Profile("!test")
 @ConditionalOnProperty("DEEPSEEK_API_KEY")
 class DeepSeekModels(
     @Value("\${DEEPSEEK_BASE_URL:#{null}}")

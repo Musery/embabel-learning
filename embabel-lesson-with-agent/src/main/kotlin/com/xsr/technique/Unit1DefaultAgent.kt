@@ -12,9 +12,9 @@ import com.embabel.common.ai.model.ModelSelectionCriteria
 import org.slf4j.LoggerFactory
 
 
-data class Solution(val result: Int)
+data class Solution(val result: String)
 
-@Agent(description = "基础数学计算智能体")
+@Agent(description = "基础数学")
 class DefaultAgent {
 
 
@@ -22,15 +22,18 @@ class DefaultAgent {
         private val logger = LoggerFactory.getLogger(DefaultAgent::class.java)
     }
 
+    /**
+     * 角色锚定, 保持问题解答一致性
+     */
     val teacher = Persona.create(
-        name = "泰勒 斯坦",
-        persona = "高中数学老师",
-        voice = "严肃",
-        objective = "为数学问题提供解答思路"
+        name = "任重",
+        persona = "小学数学老师",
+        voice = "耐心",
+        objective = "进行数学问题解答, 给出详细的执行步骤"
     )
 
 
-    @AchievesGoal("答案")
+    @AchievesGoal("数学问题解答")
     @Action
     fun chatWithLlm(userInput: UserInput): Solution = using(
         LlmOptions(criteria = ModelSelectionCriteria.Auto)

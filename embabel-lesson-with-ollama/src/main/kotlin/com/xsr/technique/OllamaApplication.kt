@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-@EnableAgentShell // 启动shell交互
+//@EnableAgentShell // 启动shell交互
 @AgentPlatform("ollama") // 启用ollama
 class OllamaApplication
 

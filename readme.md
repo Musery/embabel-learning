@@ -142,7 +142,6 @@ OPENAI_API_KEY:
  * Well-known OpenAI models.
  */
 @Configuration
-@Profile("!test")
 @ConditionalOnProperty("OPENAI_API_KEY")
 class OpenAiModels(
     @Value("\${OPENAI_BASE_URL:#{null}}")

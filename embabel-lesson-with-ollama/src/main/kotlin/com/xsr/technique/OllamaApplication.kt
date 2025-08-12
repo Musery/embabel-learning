@@ -1,7 +1,6 @@
 package com.xsr.technique
 
 import com.embabel.agent.config.annotation.AgentPlatform
-import com.embabel.agent.config.annotation.EnableAgentShell
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 

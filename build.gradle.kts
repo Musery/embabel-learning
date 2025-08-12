@@ -34,8 +34,7 @@ subprojects {
     dependencyManagement {
         dependencies {
             dependency("org.jetbrains.kotlin:kotlin-reflect:${extra["kotlin.version"] as String}")
-
-            dependency("org.springdoc:springdoc-openapi-starter-webflux-ui:2.3.0")
+            dependency("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
             dependency("com.embabel.agent:embabel-agent-starter:${extra["embabel-agent.version"] as String}")
         }
     }

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory
 
 data class Solution(val result: String)
 
-@Agent(description = "基础数学")
+@Agent(description = "数学计算")
 class DefaultAgent {
 
 
@@ -26,14 +26,14 @@ class DefaultAgent {
      * 角色锚定, 保持问题解答一致性
      */
     val teacher = Persona.create(
-        name = "任重",
+        name = "华罗庚",
         persona = "小学数学老师",
         voice = "耐心",
         objective = "进行数学问题解答, 给出详细的执行步骤"
     )
 
 
-    @AchievesGoal("数学问题解答")
+    @AchievesGoal(description = "数学问题解答")
     @Action
     fun chatWithLlm(userInput: UserInput): Solution = using(
         LlmOptions(criteria = ModelSelectionCriteria.Auto)

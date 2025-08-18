@@ -9,9 +9,14 @@ subprojects {
     version = "0.1.0"
 
     repositories {
-        mavenLocal()
-        google()
         mavenCentral()
+        maven {
+            name = "embabel-releases"
+            url = uri("https://repo.embabel.com/artifactory/libs-release")
+            mavenContent {
+                releasesOnly()
+            }
+        }
         maven {
             name = "embabel-snapshots"
             url = uri("https://repo.embabel.com/artifactory/libs-snapshot")

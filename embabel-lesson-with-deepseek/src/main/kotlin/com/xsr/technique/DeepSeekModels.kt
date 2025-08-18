@@ -1,6 +1,7 @@
-package com.xsr.technique.config
+package com.xsr.technique
 
 import com.embabel.agent.common.RetryProperties
+import com.embabel.agent.config.models.OpenAiCompatibleModelFactory
 import com.embabel.common.ai.model.Llm
 import com.embabel.common.ai.model.PerTokenPricingModel
 import io.micrometer.observation.ObservationRegistry
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.LocalDate
 
-@ConfigurationProperties(prefix = "embabel.deekseek")
+@ConfigurationProperties(prefix = "embabel.agent.platform.models.deekseek")
 data class DeepSeekProperties(
     override val maxAttempts: Int = 10,
     override val backoffMillis: Long = 5000L,
@@ -27,9 +28,13 @@ class DeepSeekModels(
     baseUrl: String?,
     @Value("\${DEEPSEEK_API_KEY}")
     apiKey: String,
+    @Value("\${DEEPSEEK_COMPLETIONS_PATH:#{null}}")
+    completionsPath: String?,
+    @Value("\${DEEPSEEK_EMBEDDINGS_PATH:#{null}}")
+    embeddingsPath: String?,
     observationRegistry: ObservationRegistry,
     private val properties: DeepSeekProperties,
-) : DeepSeekCompatibleModelFactory(baseUrl, apiKey, observationRegistry) {
+) : OpenAiCompatibleModelFactory(baseUrl, apiKey, completionsPath, embeddingsPath, observationRegistry) {
 
     init {
         logger.info("DeepSeek models are available: {}", properties)
@@ -37,19 +42,21 @@ class DeepSeekModels(
 
     @Bean
     fun chat(): Llm {
-        return deepseekCompatible(
+        return openAiCompatibleLlm(
             model = DEEPSEEK_CHAT,
+            provider = PROVIDER,
+            knowledgeCutoffDate = LocalDate.of(2025, 3, 25),
             pricingModel = PerTokenPricingModel(
                 usdPer1mInputTokens = 0.40,
                 usdPer1mOutputTokens = 0.60,
-            ), provider = PROVIDER, knowledgeCutoffDate = LocalDate.of(2025, 3, 25)
+            ),
+            retryTemplate = properties.retryTemplate(DEEPSEEK_CHAT),
         )
     }
 
 
     companion object {
         const val DEEPSEEK_CHAT = "deepseek-chat"
-
         const val PROVIDER = "deepseek"
         private val logger = LoggerFactory.getLogger(DeepSeekModels::class.java)
     }

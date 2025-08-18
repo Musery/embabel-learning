@@ -10,7 +10,5 @@ pluginManagement {
     }
 }
 rootProject.name = "embabel-learning"
-include("embabel-lesson-with-ollama")
 include("embabel-lesson-with-agent")
-include("embabel-lesson-with-openai")
 include("embabel-lesson-with-deepseek")

@@ -12,3 +12,4 @@ pluginManagement {
 rootProject.name = "embabel-learning"
 include("embabel-lesson-with-agent")
 include("embabel-lesson-with-deepseek")
+include("embabel-lesson-with-gemini")

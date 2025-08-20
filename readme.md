@@ -179,3 +179,55 @@ class OpenAiModels(
 
 ollama是会通过API接口获取模型名称, openai则是手动注入
 
+## 源码解读
+
+### Plan 规划
+
+```kotlin
+// Try each possible action from the current state
+for (action in actions) {
+    if (!action.isAchievable(current.state)) continue
+
+    // Calculate the new state after applying this action
+    val nextState = applyAction(current.state, action)
+
+    // Skip if this action doesn't actually change the state (prevents loops)
+    if (nextState == current.state) continue
+
+    // Calculate total cost to reach nextState via this path
+    val tentativeGScore = gScores.getValue(current.state) + action.cost
+
+    // Skip if this path would already be more expensive than our best goal so far
+    if (bestGoalNode != null && tentativeGScore >= bestGoalScore) {
+        continue
+    }
+
+    // If we found a better path to nextState
+    if (tentativeGScore < gScores.getValue(nextState)) {
+        // Record this better path
+        cameFrom[nextState] = Pair(current.state, action)
+        gScores[nextState] = tentativeGScore
+
+        // Only add to open list if not in closed set, or if we've found a better path
+        if (nextState !in closedSet) {
+            openList.add(SearchNode(nextState, tentativeGScore, heuristic(nextState, goal)))
+        } else {
+            // If we find a better path to a "closed" state, reopen it
+            closedSet.remove(nextState)
+            openList.add(SearchNode(nextState, tentativeGScore, heuristic(nextState, goal)))
+        }
+    }
+}
+```
+
+从源码观测可知 从Goal的最终态进行倒推整个plan的路径, 路径选择的时候会从action进行遍历, 遍历的时候默认会从fun的顺序读取,
+然后匹配当前态可以执行的action根据cost进行排序获取最优先可以执行的action.
+
+### 自动定义规划链路DSL篇
+
+目前Embabel-Agent支持DSL语法进行Agent action执行的规划编排.
+主要源码文件 1. AgentScopeBuilder.kt
+
+```kotlin
+
+```

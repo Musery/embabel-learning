@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: embabel-learning
+  profiles:
+    active: dev
+
+embabel:
+  models:
+    default-llm: gemini-2.0-flash
+
+GEMINI_BASE_URL: https://generativelanguage.googleapis.com/v1beta/openai/
+GEMINI_API_KEY:

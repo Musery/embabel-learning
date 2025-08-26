@@ -7,6 +7,12 @@ spring:
 embabel:
   models:
     default-llm: deepseek-chat
+# chat 助手
+  shell:
+    chat:
+      bind-conversation: true
+      model: deepseek-chat
+      temperature: 0.9
 
 # deep seek 自动装配
 DEEPSEEK_BASE_URL: https://api.deepseek.com/

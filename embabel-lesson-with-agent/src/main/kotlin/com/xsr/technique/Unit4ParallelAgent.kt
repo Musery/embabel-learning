@@ -39,6 +39,7 @@ data class Story(val content: String)
  *  这个Agent执行的链路是  getTopicFromInput -> chineseStory -> europeanStory -> merge
  *  其中 chineseStory , europeanStory 两个action并没有依赖关系, 所以是可以并行的, 但是目前的
  *  SimpleAgentBuilder只会串行执行, 后面会考虑提交pr去增加此并行功能
+ *  详见https://github.com/embabel/embabel-agent/issues/90
  *
  */
 @Agent(description = "主题故事生成")

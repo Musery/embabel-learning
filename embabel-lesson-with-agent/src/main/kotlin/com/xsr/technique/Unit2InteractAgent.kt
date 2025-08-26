@@ -38,16 +38,16 @@ data class YiPerson(
 class Unit2InteractAgent {
 
     @Action
-    fun extractPerson(userInput: UserInput, context: OperationContext): Person? =
+    fun extractPerson(userInput: UserInput, context: OperationContext): Person =
         // All prompts are typesafe
-        context.ai().withDefaultLlm().createObjectIfPossible(
+        context.ai().withDefaultLlm().create(
             """
             根据用户输入提取名字, 创建Person对象:
             ${userInput.content}
             """.trimIndent()
         )
 
-    @Action(cost = 100.0) // Make it costly so it won't be used in a plan unless there's no other path
+    @Action
     internal fun makeInformation(
         person: Person,
     ): UserInformation =

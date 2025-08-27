@@ -7,7 +7,7 @@ spring:
 embabel:
   models:
     default-llm: deepseek-chat
-# chat 助手
+  # chat 助手
   shell:
     chat:
       bind-conversation: true
